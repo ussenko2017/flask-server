@@ -1,0 +1,50 @@
+{% extends "basic.html" %}
+
+{% block content %}
+
+<style>
+    #aside{
+    padding-left:100px;
+    }
+</style>
+<div class="posts-list">
+
+<h3 class="widget-title">Список студентов</h3>
+    <table style="width:60%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+            <th><h4><b>Имя</b></h4></th>
+            <th><h4><b>Фамилия</b></h4></th>
+            <th><h4><b>Отчество</b></h4></th>
+            <th><h4><b>Номер тел.</b></h4></th>
+            <th><h4><b>Отделение</b></h4></th>
+            <th><h4><b>Дата регистрации</b></h4></th>
+        </tr>
+    </thead>
+        <tbody>
+        {% for student in students %}
+            {% if student != 'ColumnList' and student != 'ids' %}
+                {% for otdel in otdels %}
+                    {% if otdel != 'ColumnList' and otdel != 'ids' %}
+                        {% if students[student]['otdel_id']  == otdel %}
+          <tr>
+            <td>{{ student }}</td>
+            <td>{{ students[student]['firstname'] }}</td>
+            <td>{{ students[student]['lastname'] }}</td>
+            <td>{{ students[student]['patr'] }}</td>
+            <td>{{ students[student]['number'] }}</td>
+            <td>{{ otdels[otdel]['name'] }}</td>
+            <td>{{ students[student]['date'] }}</td>
+        </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+    </tbody>
+
+</table>
+        </div>
+{% endblock %}

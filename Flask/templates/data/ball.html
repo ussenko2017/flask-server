@@ -1,0 +1,44 @@
+{% extends "basic.html" %}
+
+{% block content %}
+<div class="posts-list">
+
+<h3 class="widget-title">Список оценок</h3>
+    <table style="width:100%" class="table table-condensed">
+    <thead>
+        <tr>
+            <th><h4><b>№</b></h4></th>
+            <th><h4><b>Оценка</b></h4></th>
+            <th><h4><b>Студент</b></h4></th>
+            <th><h4><b>Предмет</b></h4></th>
+            <th><h4><b>Дата</b></h4></th>
+        </tr>
+    </thead>
+        <tbody>
+        {% for ball in balls %}
+
+                    {% if ball != 'ids' and ball != 'ColumnList' %}
+
+                <tr>
+                    <td>{{ ball }}</td>
+                    <td>{{ balls[ball]['ball'] }}</td>
+                    <td>{{
+                        students[balls[ball]['student_id']]['lastname'] + ' ' +
+                        students[balls[ball]['student_id']]['firstname']+ ' ' +
+                        students[balls[ball]['student_id']]['patr']
+                        }}</td>
+                    <td>{{ predmets[balls[ball]['predmet_id']]['name'] }}</td>
+                    <td>{{ balls[ball]['date'] }}</td>
+
+                </tr>
+
+                    {% endif %}
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+</div>
+
+{% endblock %}

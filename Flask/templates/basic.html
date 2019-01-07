@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Адаптивная вёрстка сайта</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic|Playfair+Display:400,700&subset=latin,cyrillic">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="/static/content/site.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+</head>
+<body>
+<header style="position:fixed;">
+    <nav class="container">
+      <a class="logo" href="">
+        <span>M</span>
+        <span>Y</span>
+        <span>L</span>
+        <span>X</span>
+      </a>
+      <div class="nav-toggle"><span></span></div>
+      <form action="" method="get" id="searchform">
+        <input type="text" placeholder="Искать на сайте...">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+      <ul >
+        <li><a href="{{ url_for('home') }}">Новости</a></li>
+        <li><a href="{{ url_for('protected') }}">Профиль</a></li>
+        {% if current_user.is_authenticated %}
+                  <li><a href="{{ url_for('showjournal') }}">Журнал</a></li>
+
+        <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Учебная часть</a>
+    <div class="dropdown-content">
+      <a href="{{ url_for('showotdel') }}">Отделения</a>
+      <a href="{{ url_for('showstudent') }}">Студенты</a>
+      <a href="{{ url_for('showpredmet') }}">Предметы</a>
+      <a href="{{ url_for('showball') }}">Оценки</a>
+    </div>
+        {% endif %}
+      </ul>
+    </nav>
+
+  </header>
+
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% block content %}{% endblock %}
+
+
+<aside  id="aside">
+  <!--
+  <div class="widget">
+    <h3 class="widget-title">Категории</h3>
+    <ul class="widget-category-list">
+      <li><a href="">Дизайн</a> (2)</li>
+      <li><a href="">Вёрстка</a> (5)</li>
+      <li><a href="">Видео</a> (1)</li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h3 class="widget-title">Последние записи</h3>
+    <ul class="widget-posts-list">
+      <li>
+        <div class="post-image-small">
+          <a href=""><img src="https://html5book.ru/wp-content/uploads/2016/05/rasskaz_slovar_rodnoy_prirodi.jpg"></a>
+        </div>
+        <h4 class="widget-post-title">Весна</h4>
+      </li>
+      <li>
+        <div class="post-image-small">
+          <a href=""><img src="https://html5book.ru/wp-content/uploads/2016/05/rasskaz_Russia.jpg"></a>
+        </div>
+        <h4 class="widget-post-title">Лето</h4>
+      </li>
+      <li>
+        <div class="post-image-small">
+          <a href=""><img src="https://html5book.ru/wp-content/uploads/2016/05/rasskaz_rodnaya_priroda_osen.jpg"></a>
+        </div>
+        <h4 class="widget-post-title">Осень</h4>
+      </li>
+    </ul>
+  </div>
+  -->
+ {% if current_user.is_authenticated %}
+    <div  style="position:fixed;" id="left-column1">
+    <div  class="widget">
+    <h3 class="widget-title">Профиль</h3>
+      <p class="mes">Привет, {{ current_user.id }}</p>
+      <br>
+      <a class="button"   href="{{ url_for('logout') }}">Выход</a>
+  </div>
+</div>
+{% else %}
+    <div style="position:fixed;" id="left-column2" >
+    <div  class="widget">
+    <h3 class="widget-title">Вход</h3>
+    <form action="login" method="post" id="login">
+      <input type="email" name="email" id="email" placeholder="Ваш email" required>
+      <br>
+      <input type="password" name="password" id="password" placeholder="Ваш пароль" required>
+      <br>
+      <br>
+      <input  class="button" type="submit" value="Войти" >
+    </form>
+  </div>
+
+  <div  class="widget">
+    <h3 class="widget-title">Регистрация</h3>
+    <form action="reg" method="post" id="reg">
+      <input type="email" name="email" id="email_reg" placeholder="Ваш email" required>
+      <br>
+      <input type="password" name="password" id="password_reg" placeholder="Ваш пароль" required>
+      <br>
+      <br>
+      <input class="button"  type="submit" value="Зарегистрироваться" >
+    </form>
+  </div>
+        </div>
+{% endif %}
+
+</aside>
+</div> <!-- конец div class="container"-->
+<footer>
+  <div class="container">
+    <div class="footer-col"><span>Мой блог © 2016</span></div>
+    <div class="footer-col">
+      <div class="social-bar-wrap">
+        <a title="Facebook" href="" target="_blank"><i class="fa fa-facebook"></i></a>
+        <a title="Twitter" href="" target="_blank"><i class="fa fa-twitter"></i></a>
+        <a title="Pinterest" href="" target="_blank"><i class="fa fa-pinterest"></i></a>
+        <a title="Instagram" href="" target="_blank"><i class="fa fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <a href="mailto:admin@yoursite.ru">Написать письмо</a>
+    </div>
+  </div>
+</footer>
+<script>
+$('.nav-toggle').on('click', function(){
+$('#menu').toggleClass('active');
+});
+</script>
+</body>
+</html>
+</body>
+</html>
