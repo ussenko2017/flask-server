@@ -29,6 +29,7 @@ def user_loader(email):
 
     user = User()
     user.id = email
+
     return user
 
 
@@ -80,7 +81,7 @@ def login():
                 user = User()
                 user.id = email
                 flask_login.login_user(user)
-                g.user = email
+
                 return flask.redirect(flask.url_for('home'))
 
         return flask.redirect(flask.url_for('home'))
@@ -192,6 +193,47 @@ def autoadd():
     myFunc.autoadd()
     return 'done'
 
+
+
+@app.route('/api/v1/add/',methods=['GET','POST'])
+def add():
+    db = myFunc.createTables(myFunc.DBName)
+    tablename = flask.request.values.get('tablename')
+
+    if tablename == myFunc.STUDENT_TABLE:
+        firstname = flask.request.values.get(myFunc.FIRSTNAME_FIELD)
+        lastname = flask.request.values.get(myFunc.LASTNAME_FIELD)
+        patr = flask.request.values.get(myFunc.PATR_FIELD)
+        number = flask.request.values.get(myFunc.NUMBER_FIELD)
+        otdel_id = flask.request.values.get(myFunc.OTDEL_ID_FIELD)
+
+
+        if firstname != '' and lastname != '' and number != '' and otdel_id != '':
+            db.addRow(tablename,[firstname,lastname,patr,number,otdel_id,myFunc.getDate()])
+            return  flask.jsonify({'ok':200})
+    elif tablename == myFunc.OTDEL_TABLE:
+        name = flask.request.values.get(myFunc.NAME_FIELD)
+        if name != '':
+            db.addRow(tablename,[name,myFunc.getDate()])
+            return  flask.jsonify({'ok':200})
+
+    elif tablename == myFunc.PREDMET_TABLE:
+        name = flask.request.values.get(myFunc.NAME_FIELD)
+        kolvo_chasov = flask.request.values.get(myFunc.KOLVO_CHASOV_FIELD)
+        if name != '' and kolvo_chasov != '':
+            db.addRow(tablename,[name,kolvo_chasov,myFunc.getDate()])
+            return  flask.jsonify({'ok':200})
+
+    elif tablename == myFunc.BALL_TABLE:
+        ball = flask.request.values.get(myFunc.BALL_FIELD)
+        predmet_id = flask.request.values.get(myFunc.STUDENT_ID_FIELD)
+        student_id = flask.request.values.get(myFunc.PREDMET_ID_FIELD)
+        if ball != '' and predmet_id != '' and student_id != '':
+            db.addRow(tablename,[ball,predmet_id,student_id,myFunc.getDate()])
+            return  flask.jsonify({'ok':200})
+
+
+    return flask.jsonify({'error':400})
 
 if __name__ == '__main__':
     app.run()

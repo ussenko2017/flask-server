@@ -89,7 +89,8 @@
   </div>
   -->
  {% if current_user.is_authenticated %}
-    <div  style="position:fixed;" id="left-column1">
+    <div  style="position:fixed;">
+    <div  id="left-column1">
     <div  class="widget">
     <h3 class="widget-title">Профиль</h3>
       <p class="mes">Привет, {{ current_user.id }}</p>
@@ -97,6 +98,20 @@
       <a class="button"   href="{{ url_for('logout') }}">Выход</a>
   </div>
 </div>
+
+    <div id="addotdel"  class="widget">
+    <h3 class="widget-title">Отделение</h3>
+    <form action="/api/v1/add/" method="post" id="addotdel_form">
+      <input type="hidden" name="tablename" value="otdels" required>
+      <br>
+        <input type="text" name="name" placeholder="Название" required>
+      <br>
+      <br>
+
+      <input class="button"  type="submit" value="Добавить" >
+    </form>
+  </div>
+    </div>
 {% else %}
     <div style="position:fixed;" id="left-column2" >
     <div  class="widget">
@@ -118,6 +133,8 @@
       <br>
       <input type="password" name="password" id="password_reg" placeholder="Ваш пароль" required>
       <br>
+        <input type="text" name="key" id="key_reg" placeholder="Регистрационный ключ" required>
+
       <br>
       <input class="button"  type="submit" value="Зарегистрироваться" >
     </form>

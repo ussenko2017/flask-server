@@ -460,6 +460,9 @@ background: #3C3D41;
 letter-spacing: 0.1em;
 white-space: nowrap;
 }
+.more-link:hover{
+letter-spacing:1em;
+}
 .more-link:after {
 content: '';
 display: block;
@@ -511,7 +514,10 @@ padding-left:10px;
     font-size: 16px;
     width:100%;
 }
+.button:hover{
+background-color:#F99999;
 
+}
 .post-title {
 padding-left:40px;
 }
@@ -583,4 +589,8 @@ li.dropdown {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+#addotdel{
+display:none;
 }
